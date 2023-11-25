@@ -20,4 +20,26 @@
 
     }
  
+      /*
+      If we print any object,Java compiler  internally invokes the toString() method on the object.
+       So overriding the toString() method, returns the desired output
+     */
+    // @Override
+   
+    public String toString() {
+        String contactInfo = String.format("""
+
+                FirstName:  %s
+                LastName:  %s
+                address:  %s
+                city:  %s
+                zip:  %s
+                phoneNo:  %s
+                emailID: %s
+
+                                """, this.firstName, this.lastName, this.address, this.city, this.zip, this.phoneNo,
+                this.emailID);
+
+        return contactInfo;
+    }
 }
