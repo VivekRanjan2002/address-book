@@ -13,7 +13,8 @@ public class AddressBook {
             System.out.println("Press 1 to add the New Contact ");
             System.out.println("Press 2 to display the details by providing name ");
             System.out.println("Press 3 to edit contact details");
-            System.out.println("Press 4 to exit");
+            System.out.println("Press 4 to remove Contact");
+            System.out.println("Press 5 to exit");
             System.out.println("Please Enter your Option: ");
             int option = sc.nextInt();
             switch (option) {
@@ -29,6 +30,9 @@ public class AddressBook {
                     editDetails(addressBook);
                     break;
                 case 4:
+                    removeContact(addressBook);
+                    break;
+                case 5:
                     System.out.println("Program is Closing....");
                     running = false;
                     break;
@@ -163,6 +167,20 @@ public class AddressBook {
             }
         } else {
             System.out.println("No such contact exist ");
+        }
+    }
+
+    // remove contact from addressBook
+    public static void removeContact(HashMap<String, Contact> addressBook) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please Enter Full Name to be Removed: ");
+        String fullname = sc.nextLine().replaceAll(" ", "").toUpperCase();
+        if (addressBook.containsKey(fullname)) {
+            addressBook.remove(fullname);
+            System.out.println("Contact Removed Successfully");
+        }
+        else {
+            System.out.println("No Such Contact Exist");
         }
     }
 }
