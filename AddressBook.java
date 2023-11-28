@@ -44,7 +44,7 @@ public class AddressBook {
         }
     }
 
-    // add new contact in addressbook
+    // add  multiple  contact in addressbook
     public static void addNewContact(HashMap<String, Contact> addressBook) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please Enter First Name: ");
@@ -77,9 +77,9 @@ public class AddressBook {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please Enter Full Name: ");
         String fullName = sc.nextLine();
-
-        if (addressBook.containsKey(fullName.replaceAll(" ", "").toUpperCase())) {
-            System.out.println(addressBook.get(fullName.toUpperCase()));
+        String nameToBeSearched = fullName.replaceAll(" ", "").toUpperCase();
+        if (addressBook.containsKey(nameToBeSearched)) {
+            System.out.println(addressBook.get(nameToBeSearched));
         } else {
             System.out.println("OOPS! SORRY!! No such contact exist ! ");
         }
@@ -88,8 +88,9 @@ public class AddressBook {
 
     // edit contact details for particular fullname user
     public static void editDetails(HashMap<String, Contact> addressBook) {
+        System.out.println("Enter the full name: ");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Please Enter Full Name: ");
+
         String fullName = sc.nextLine();
         String searchKey = fullName.replaceAll(" ", "").toUpperCase();
         if (addressBook.containsKey(searchKey)) {
