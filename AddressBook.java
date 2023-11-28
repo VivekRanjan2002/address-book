@@ -2,38 +2,43 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBook {
+    String addressBookName;
+    public HashMap<String, Contact> contactSaver;
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to Address Book Program");
+     AddressBook(String addressBookName,HashMap<String, Contact> contactSaver) {
+         this.addressBookName = addressBookName;
+        this.contactSaver = contactSaver;
+    }
+
+    public void OptionLogger() {
 
         Scanner sc = new Scanner(System.in);
-        HashMap<String, Contact> addressBook = new HashMap<>();
+
         boolean running = true;
         while (running) {
             System.out.println("Press 1 to add the New Contact ");
             System.out.println("Press 2 to display the details by providing name ");
             System.out.println("Press 3 to edit contact details");
             System.out.println("Press 4 to remove Contact");
-            System.out.println("Press 5 to exit");
+            System.out.println("Press 5 to Exit ");
             System.out.println("Please Enter your Option: ");
             int option = sc.nextInt();
             switch (option) {
                 case 1:
-                    addNewContact(addressBook);
+                    addNewContact();
                     System.out.println("Contact is Successfully Created");
 
                     break;
                 case 2:
-                    displayContact(addressBook);
+                    displayContact();
                     break;
                 case 3:
-                    editDetails(addressBook);
+                    editDetails();
                     break;
                 case 4:
-                    removeContact(addressBook);
+                    removeContact();
                     break;
                 case 5:
-                    System.out.println("Program is Closing....");
                     running = false;
                     break;
                 default:
@@ -42,10 +47,11 @@ public class AddressBook {
             }
 
         }
+        return;
     }
 
-    // add  multiple  contact in addressbook
-    public static void addNewContact(HashMap<String, Contact> addressBook) {
+    // add  multiple  contact in contactSaver
+    public void addNewContact() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please Enter First Name: ");
         String firstName = sc.nextLine();
@@ -66,20 +72,20 @@ public class AddressBook {
         String fullName = (firstName + lastName).replaceAll(" ", "");
         System.out.println(fullName);
 
-        addressBook.put(fullName.toUpperCase(), C1);
-        System.out.println(addressBook.get(fullName.toUpperCase()));
+        contactSaver.put(fullName.toUpperCase(), C1);
+        System.out.println(contactSaver.get(fullName.toUpperCase()));
 
         return;
     }
 
     // display contact info from address by fullname as key
-    public static void displayContact(HashMap<String, Contact> addressBook) {
+    public  void displayContact() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please Enter Full Name: ");
         String fullName = sc.nextLine();
         String nameToBeSearched = fullName.replaceAll(" ", "").toUpperCase();
-        if (addressBook.containsKey(nameToBeSearched)) {
-            System.out.println(addressBook.get(nameToBeSearched));
+        if (contactSaver.containsKey(nameToBeSearched)) {
+            System.out.println(contactSaver.get(nameToBeSearched));
         } else {
             System.out.println("OOPS! SORRY!! No such contact exist ! ");
         }
@@ -87,15 +93,15 @@ public class AddressBook {
     }
 
     // edit contact details for particular fullname user
-    public static void editDetails(HashMap<String, Contact> addressBook) {
+    public  void editDetails() {
         System.out.println("Enter the full name: ");
         Scanner sc = new Scanner(System.in);
 
         String fullName = sc.nextLine();
         String searchKey = fullName.replaceAll(" ", "").toUpperCase();
-        if (addressBook.containsKey(searchKey)) {
-            Contact contact = addressBook.get(searchKey);
-            addressBook.remove(searchKey);
+        if (contactSaver.containsKey(searchKey)) {
+            Contact contact = contactSaver.get(searchKey);
+            contactSaver.remove(searchKey);
             boolean running = true;
             while (running) {
                 System.out.println("Press 1 to edit First Name");
@@ -157,7 +163,7 @@ public class AddressBook {
                     case 8:
                         String key = contact.getFirstName() + contact.getLastName();
                         System.out.println(key);
-                        addressBook.put(key, contact);
+                        contactSaver.put(key, contact);
                         System.out.println("Contact updated Successfully");
                         running = false;
 
@@ -171,17 +177,29 @@ public class AddressBook {
         }
     }
 
-    // remove contact from addressBook
-    public static void removeContact(HashMap<String, Contact> addressBook) {
+    // remove contact from contactSaver
+    public void removeContact() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please Enter Full Name to be Removed: ");
         String fullname = sc.nextLine().replaceAll(" ", "").toUpperCase();
-        if (addressBook.containsKey(fullname)) {
-            addressBook.remove(fullname);
+        if (contactSaver.containsKey(fullname)) {
+            contactSaver.remove(fullname);
             System.out.println("Contact Removed Successfully");
-        }
-        else {
+        } else {
             System.out.println("No Such Contact Exist");
         }
+    }
+
+    public void logger() {
+
+        String AddressBookInfo;
+    AddressBookInfo= String.format("""
+
+                AddressBookName:  %s
+                                """, this.addressBookName);
+    // Iterating using forEach() and lambda expressions
+       System.out.println(AddressBookInfo);
+        contactSaver.forEach((key, value) ->System.out.println(value.toString()));
+        
     }
 }
