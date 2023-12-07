@@ -15,8 +15,9 @@ public class Main {
             System.out.println("Press 2 to add contacts in existing address book");
             System.out.println("Press 3 to print the address book");
             System.out.println("Press 4 to search for particular person in city");
-            System.out.println("Press 5 to print contacts in entire address book on the basis of city");
-            System.out.println("Press 6 to exit program");
+            System.out.println("Press 5 to print contacts in entire address books on the basis of city");
+            System.out.println("Press 6 to print no. of contacts in entire address books on city basis");
+            System.out.println("Press 7 to exit program");
             System.out.println("Press your Option: ");
             int option = sc.nextInt();
             switch (option) {
@@ -42,11 +43,13 @@ public class Main {
                         System.out.println("No any contact exist in this city");
                     }
                     break;
-                   case 6:
+                case 6:
+                    System.out.println("Total no. of contacts in this city is: " +
+                            logContactCityBasis(AddressBookSaver).size());
+                    break;
+                   case 7:
                    running=false;
                    break;
-
-
                 default:
                     System.out.println("Invalid Option");
 
@@ -97,7 +100,6 @@ public class Main {
     public static void searchContactCityBasis(HashMap<String, AddressBook> AddressBookSaver){
         Scanner sc= new Scanner(System.in);
         ArrayList<Contact> contactsCity= logContactCityBasis(AddressBookSaver);
-        System.out.println(contactsCity);
         if(contactsCity.size()==0){
             System.out.println("No any contact exist in this city");
             return;
