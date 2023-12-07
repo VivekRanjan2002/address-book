@@ -67,12 +67,16 @@ public class AddressBook {
         String PhoneNo = sc.nextLine();
         System.out.println("Please Enter EmailID: ");
         String emailID = sc.nextLine();
-
+        
         Contact C1 = new Contact(firstName, lastName, address, city, zip, PhoneNo, emailID);
         String fullName = (firstName + lastName).replaceAll(" ", "");
         System.out.println(fullName);
 
-        contactSaver.put(fullName.toUpperCase(), C1);
+        if (!contactSaver.containsKey(fullName.toUpperCase()))
+            contactSaver.put(fullName.toUpperCase(), C1);
+        else {
+            System.out.println(fullName +" already exists ");
+        }
         System.out.println(contactSaver.get(fullName.toUpperCase()));
 
         return;
