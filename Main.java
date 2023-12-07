@@ -14,8 +14,9 @@ public class Main {
             System.out.println("Press 1 to add contacts in new address book");
             System.out.println("Press 2 to add contacts in existing address book");
             System.out.println("Press 3 to print the address book");
-            System.out.println("Press 4 to print contacts in entire address book on the basis of city");
-            System.out.println("Press 5 to exit program");
+            System.out.println("Press 4 to search for particular person in city");
+            System.out.println("Press 5 to print contacts in entire address book on the basis of city");
+            System.out.println("Press 6 to exit program");
             System.out.println("Press your Option: ");
             int option = sc.nextInt();
             switch (option) {
@@ -29,9 +30,19 @@ public class Main {
                     logAddressBook(AddressBookSaver);
                     break;
                 case 4:
-                    logContactCityBasis(AddressBookSaver);
+                    searchContactCityBasis(AddressBookSaver);
                     break;
-                   case 5:
+                case 5:
+                    ArrayList<Contact> arr=logContactCityBasis(AddressBookSaver);
+                    if(arr.size()>0){
+                        System.out.println("Here are the list of contacts in this city: ");
+                        System.out.println(arr);
+                    }
+                    else{
+                        System.out.println("No any contact exist in this city");
+                    }
+                    break;
+                   case 6:
                    running=false;
                    break;
 
@@ -43,7 +54,7 @@ public class Main {
         }
 
     }
- 
+ // add new addressbook in hashmap addressbooksaver
     public static void addNewAddressBook(HashMap<String, AddressBook> AddressBookSaver) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the new address book");
@@ -55,7 +66,7 @@ public class Main {
         
 
     }
-    
+    // check for certain addressbook in hashmap addressbooksaver
     public static void existAddressBook(HashMap<String, AddressBook> AddressBook) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please Enter Existing AddressBook name in which u want to add contacts");
@@ -70,7 +81,7 @@ public class Main {
         }
         
     }
-
+    // log current addressbook
     public static void logAddressBook(HashMap<String, AddressBook> AddressBook) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please Enter Existing AddressBook name  which u want to print ");
@@ -82,8 +93,32 @@ public class Main {
             System.out.println("No such Address Book exist . Please Type correct AddressBook Name ");
         }
     }
+    // search for particular person in particular city
+    public static void searchContactCityBasis(HashMap<String, AddressBook> AddressBookSaver){
+        Scanner sc= new Scanner(System.in);
+        ArrayList<Contact> contactsCity= logContactCityBasis(AddressBookSaver);
+        System.out.println(contactsCity);
+        if(contactsCity.size()==0){
+            System.out.println("No any contact exist in this city");
+            return;
+        }
+        System.out.println("Please Enter Contact first name you want to search: ");
+        String input= sc.nextLine();
+        String firstName= input.replaceAll(" ","").toUpperCase();
+        boolean found=false;
+       for(Contact c: contactsCity){
 
-    public  static void logContactCityBasis(HashMap<String, AddressBook> AddressBookSaver){
+           if(c.getFirstName().equals(firstName)) {
+               System.out.println(c);
+               found=true;
+           }
+       }
+       if(!found) System.out.println("sorry! no such contact exist in this city");
+
+
+    }
+// log contacts across all addressbook of particular city
+    public  static ArrayList<Contact> logContactCityBasis(HashMap<String, AddressBook> AddressBookSaver){
         Scanner sc= new Scanner(System.in);
         System.out.println("Please Enter city Name: ");
         String input= sc.nextLine();
@@ -100,13 +135,7 @@ public class Main {
 
             });
         });
-        if(arr.size()>0){
-            System.out.println("Here are the list of contacts whose city is "+city);
-            System.out.println(arr);
-        }
-        else{
-            System.out.println("No any contact exist in "+ city);
-        }
+       return arr;
     }
 
 
