@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -13,7 +14,8 @@ public class Main {
             System.out.println("Press 1 to add contacts in new address book");
             System.out.println("Press 2 to add contacts in existing address book");
             System.out.println("Press 3 to print the address book");
-            System.out.println("Press 4 to exit program");
+            System.out.println("Press 4 to print contacts in entire address book on the basis of city");
+            System.out.println("Press 5 to exit program");
             System.out.println("Press your Option: ");
             int option = sc.nextInt();
             switch (option) {
@@ -26,9 +28,14 @@ public class Main {
                 case 3:
                     logAddressBook(AddressBookSaver);
                     break;
-                   case 4:
+                case 4:
+                    logContactCityBasis(AddressBookSaver);
+                    break;
+                   case 5:
                    running=false;
                    break;
+
+
                 default:
                     System.out.println("Invalid Option");
 
@@ -75,5 +82,32 @@ public class Main {
             System.out.println("No such Address Book exist . Please Type correct AddressBook Name ");
         }
     }
+
+    public  static void logContactCityBasis(HashMap<String, AddressBook> AddressBookSaver){
+        Scanner sc= new Scanner(System.in);
+        System.out.println("Please Enter city Name: ");
+        String input= sc.nextLine();
+        String city=input.replace(" ","").toUpperCase();
+        ArrayList<Contact> arr= new ArrayList<>();
+        AddressBookSaver.forEach((key,value)->{
+            AddressBook adb= value;
+            adb.contactSaver.forEach((k,v)->{
+                Contact c= v;
+                if(c.getCity().equals(city)) {
+
+                    arr.add(c);
+                }
+
+            });
+        });
+        if(arr.size()>0){
+            System.out.println("Here are the list of contacts whose city is "+city);
+            System.out.println(arr);
+        }
+        else{
+            System.out.println("No any contact exist in "+ city);
+        }
+    }
+
 
 }
