@@ -206,4 +206,8 @@ public class AddressBook {
         contactSaver.forEach((key, value) ->System.out.println(value.toString()));
         
     }
+    //return contactsaver hashmap
+    public HashMap<String,Contact> getContactSaver(){
+         return contactSaver;
+    }
 }

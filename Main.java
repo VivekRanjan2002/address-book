@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,7 +15,8 @@ public class Main {
             System.out.println("Press 4 to search for particular person in city");
             System.out.println("Press 5 to print contacts in entire address books on the basis of city");
             System.out.println("Press 6 to print no. of contacts in entire address books on city basis");
-            System.out.println("Press 7 to exit program");
+            System.out.println("Press 7 to print entire AddressBooks sorted according to person name");
+            System.out.println("Press 8 to exit program");
             System.out.println("Press your Option: ");
             int option = sc.nextInt();
             switch (option) {
@@ -47,7 +46,11 @@ public class Main {
                     System.out.println("Total no. of contacts in this city is: " +
                             logContactCityBasis(AddressBookSaver).size());
                     break;
-                   case 7:
+                case 7:
+                    System.out.println("Printing entire AddressBooks sorted with Person name .....");
+                    printSortedContact(AddressBookSaver);
+                    break;
+                   case 8:
                    running=false;
                    break;
                 default:
@@ -57,6 +60,8 @@ public class Main {
         }
 
     }
+
+
  // add new addressbook in hashmap addressbooksaver
     public static void addNewAddressBook(HashMap<String, AddressBook> AddressBookSaver) {
         Scanner sc = new Scanner(System.in);
@@ -138,6 +143,29 @@ public class Main {
             });
         });
        return arr;
+    }
+    /*
+    @desc: sort the entire hashmap AddressBookSaver according to Person name using java streams
+           and then print it
+     */
+    public static void printSortedContact(HashMap<String,AddressBook> AddressBookSaver){
+        // Sorting each contactSaver map in the AddressBookSaver by person's name using Java.stream()
+        AddressBookSaver.forEach((AddressBookName,AddressBook)->{
+            HashMap<String,Contact> sortedContact= AddressBook.getContactSaver().entrySet()
+                    .stream()
+                    .sorted(Map.Entry.comparingByKey())
+                    .collect(LinkedHashMap::new,(map,entry)->map.put(entry.getKey(),entry.getValue()),Map::putAll);
+            AddressBook.getContactSaver().clear();
+            AddressBook.getContactSaver().putAll(sortedContact);
+        });
+
+        //Printing the addressBook sorted according to Person
+        AddressBookSaver.forEach((addressBookName, addressBook) -> {
+            System.out.println("AddressBook: " + addressBookName);
+            addressBook.getContactSaver().forEach((personName, contact) ->
+                    System.out.println("Person: " + personName + ", Contact: " + contact.toString()));
+        });
+        return;
     }
 
 
