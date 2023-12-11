@@ -1,5 +1,8 @@
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class AddressBook {
     String addressBookName;
@@ -209,5 +212,23 @@ public class AddressBook {
     //return contactsaver hashmap
     public HashMap<String,Contact> getContactSaver(){
          return contactSaver;
+    }
+
+    // Method to sort contacts by city and then print it accordingly
+    public void sortByCity() {
+         List<Contact> contactsSortedByCity= contactSaver.values().stream()
+                .sorted(Comparator.comparing(contact -> contact.getCity().toLowerCase()))
+                .collect(Collectors.toList());
+        System.out.println("Contacts sorted by City:");
+        contactsSortedByCity.forEach(contact -> System.out.println(contact.getCity() + ": " + contact.toString()));
+    }
+
+    // Method to sort contacts by zip and then print accordingly
+    public void sortByZip() {
+        List<Contact> contactsSortedByZip= contactSaver.values().stream()
+                .sorted(Comparator.comparing(Contact::getZip))
+                .collect(Collectors.toList());
+        System.out.println("Contacts sorted by Zip:");
+        contactsSortedByZip.forEach(contact -> System.out.println(contact.getZip() + ": " + contact.toString()));
     }
 }
